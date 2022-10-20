@@ -10,20 +10,33 @@
 # distributed under the License is distributed on an "AS IS" BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
-# limitations under the License.
+# limitations under the License.git  
 
 resources:
-- name: vm-created-by-deployment-manager
+- name: default-allow-http-ssh
+  type: compute.v1.firewall
+  properties:
+    targetTags: ["http"]
+    sourceRanges: ["0.0.0.0/0"]
+    allowed:
+      - IPProtocol: TCP
+        ports: ["80","22"]  
+- name: vmdm1
   type: compute.v1.instance
   properties:
-    zone: us-central1-a
-    machineType: zones/us-central1-a/machineTypes/n1-standard-1
+    zone: us-central1-c
+    machineType: zones/us-central1-c/machineTypes/n1-standard-1
+    tags:
+      items: ["http"]
     disks:
     - deviceName: boot
       type: PERSISTENT
       boot: true
-      autoDelete: true
-      initializeParams:
-        sourceImage: projects/debian-cloud/global/images/family/debian-11
+      autoDelete: false
+      #source: projects/zeta-yen-319702/zones/us-central1-c/disks/vmdm1-c7-dsk
+      source: projects/zeta-yen-319702/zones/us-central1-c/disks/vmdm1-r9-dsk
+      #initializeParams:
+        #sourceImage: projects/centos-cloud/global/images/family/centos-7
+        #sourceImage: projects/rocky-linux-cloud/global/images/family/rocky-linux-9
     networkInterfaces:
     - network: global/networks/default

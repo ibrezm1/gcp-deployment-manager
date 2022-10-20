@@ -6,4 +6,14 @@
 ## Commands 
 * gcloud config set project
 * gcloud deployment-manager deployments create quickstart-deployment --config vm.yaml
+* Check status here 
+    * gcloud deployment-manager deployments describe quickstart-deployment
+* Update deployment 
+    * gcloud deployment-manager deployments update example-deployment \
+    --config configuration-file.yaml \
+    --preview
+    * gcloud deployment-manager deployments update example-deployment
 * gcloud deployment-manager deployments delete quickstart-deployment
+* List all images 
+    * gcloud compute images list --uri( Check Family )
+    * gcloud compute disks create my-disk-1 --source-disk old_disk --zone=us-east1-a
